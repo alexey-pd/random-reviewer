@@ -11,11 +11,16 @@ import stylesheet from "./app.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  {
+    rel: "icon",
+    type: "image/x-icon",
+    href: "/favicon/favicon.ico",
+  },
 ];
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "👨🏽‍🔬 review folks",
   viewport: "width=device-width,initial-scale=1",
 });
 
