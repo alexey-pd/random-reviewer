@@ -19,11 +19,6 @@ const getRandomUsersFx = createEffect<
 
 export const $results = restore<string[]>(getRandomUsersFx.doneData, []);
 
-sample({
-  clock: usersUpdated,
-  target: $users,
-});
-
 export const randomActivated = createEvent<number>();
 
 sample({
