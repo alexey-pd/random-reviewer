@@ -5,7 +5,7 @@
     "build": "pnpm build:css && remix build",
     "build:css": "tailwindcss -m -i ./css/app.css -o app/app.css",
     "dev:css": "tailwindcss -w -i ./css/app.css -o app/app.css",
-    "dev": "pnpm dev:css & remix dev",
+    "dev": "pnpm build:css && remix dev",
     "start": "remix-serve build",
     "typecheck": "tsc"
   },

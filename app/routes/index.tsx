@@ -1,16 +1,21 @@
 import { useUnit } from "effector-react";
 import type { ChangeEvent } from "react";
-import { $users, usersUpdated } from "~/model/users";
+import { $users, usersUpdated, randomActivated, $results } from "~/model/users";
 
 export default function Index() {
-  const { users, usersChanged } = useUnit({
+  const { users, results, usersChanged, buttonClicked } = useUnit({
     users: $users,
+    results: $results,
     usersChanged: usersUpdated,
+    buttonClicked: randomActivated,
   });
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <form className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div
+      className="flex flex-col h-screen"
+      style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}
+    >
+      <form className="shadow-md rounded p-4 text-center max-w-xl w-screen m-auto">
+        <h1 className="text-3xl mb-5 font-bold underline">Review folks!</h1>
         <textarea
           name="users"
           style={{ resize: "none" }}
@@ -20,6 +25,21 @@ export default function Index() {
             usersChanged(e.target.value)
           }
         />
+        <button
+          type="button"
+          disabled={!users}
+          className="px-4 py-2 font-semibold text-sm bg-green-700 
+          text-white rounded-full bg-violet-500 hover:bg-violet-600 
+          active:bg-violet-700 focus:outline-none focus:ring 
+          focus:ring-violet-300 cursor-pointer disabled:opacity-50 
+          disabled:bg-violet-500"
+          onClick={() => buttonClicked(2)}
+        >
+          Get lucky
+        </button>
+        {results?.length > 0 && (
+          <p className="py-10">{results.map((result) => `@${result} `)}</p>
+        )}
       </form>
     </div>
   );
