@@ -14,13 +14,13 @@ export const links: LinksFunction = () => [
   {
     rel: "icon",
     type: "image/x-icon",
-    href: "/favicon/favicon.ico",
+    href: "/hero.png",
   },
 ];
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "👨🏽‍🔬 review folks",
+  title: "review folks",
   viewport: "width=device-width,initial-scale=1",
 });
 

@@ -15,10 +15,13 @@ export default function Index() {
       style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}
     >
       <form className="shadow-md rounded p-4 text-center max-w-xl w-screen m-auto">
-        <h1 className="text-3xl mb-5 font-bold underline">Review folks!</h1>
+        <div className="flex">
+          <img className="" src="/hero.png" width={100} alt="" />
+          <h1>Code review enforcer</h1>
+        </div>
         <textarea
           name="users"
-          style={{ resize: "none" }}
+          style={{ resize: "none", marginTop: "-3px" }}
           className="h-56 shadow border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           value={users}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
