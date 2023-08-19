@@ -27,6 +27,11 @@
       "command": "pnpm start",
       "runAtStart": false
     },
+    "style": {
+      "name": "style",
+      "command": "pnpm dev:css",
+      "runAtStart": false
+    },
     "typecheck": {
       "name": "typecheck",
       "command": "pnpm typecheck",
