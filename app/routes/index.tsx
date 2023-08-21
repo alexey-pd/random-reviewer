@@ -27,12 +27,10 @@ export default function Index() {
 
   useGate(UsersGate, data);
 
-  let [searchParams, setSearchParams] = useSearchParams();
+  let [, setSearchParams] = useSearchParams();
 
   const updateQuery = () => {
     setSearchParams({ users });
-
-    console.log("searchParams", searchParams.get("users"));
   };
 
   return (
