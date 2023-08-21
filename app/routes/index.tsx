@@ -1,6 +1,19 @@
-import { useUnit } from "effector-react";
+import { useUnit, useGate } from "effector-react";
 import type { ChangeEvent } from "react";
-import { $users, usersUpdated, randomActivated, $results } from "~/model/users";
+import {
+  $users,
+  usersUpdated,
+  randomActivated,
+  $results,
+  UsersGate,
+} from "~/model/users";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
+
+export const loader = ({ request }: any) => {
+  const url = new URL(request.url);
+
+  return url.searchParams.get("users");
+};
 
 export default function Index() {
   const { users, results, usersChanged, buttonClicked } = useUnit({
@@ -9,6 +22,19 @@ export default function Index() {
     usersChanged: usersUpdated,
     buttonClicked: randomActivated,
   });
+
+  const data = useLoaderData<typeof loader>();
+
+  useGate(UsersGate, data);
+
+  let [searchParams, setSearchParams] = useSearchParams();
+
+  const updateQuery = () => {
+    setSearchParams({ users });
+
+    console.log("searchParams", searchParams.get("users"));
+  };
+
   return (
     <div
       className="flex flex-col h-screen"
@@ -36,7 +62,11 @@ export default function Index() {
           active:bg-violet-700 focus:outline-none focus:ring 
           focus:ring-violet-300 cursor-pointer disabled:opacity-50 
           disabled:bg-violet-500"
-          onClick={() => buttonClicked(2)}
+          onClick={() => {
+            buttonClicked(2);
+
+            updateQuery();
+          }}
         >
           Get lucky
         </button>
