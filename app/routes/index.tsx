@@ -6,6 +6,7 @@ import {
   randomActivated,
   $results,
   UsersGate,
+  $disabled,
 } from "~/model/users";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 
@@ -16,12 +17,14 @@ export const loader = ({ request }: any) => {
 };
 
 export default function Index() {
-  const { users, results, usersChanged, buttonClicked } = useUnit({
-    users: $users,
-    results: $results,
-    usersChanged: usersUpdated,
-    buttonClicked: randomActivated,
-  });
+  const { users, results, usersChanged, buttonClicked, disabledButton } =
+    useUnit({
+      users: $users,
+      results: $results,
+      usersChanged: usersUpdated,
+      buttonClicked: randomActivated,
+      disabledButton: $disabled,
+    });
 
   const data = useLoaderData<typeof loader>();
 
@@ -54,7 +57,7 @@ export default function Index() {
         />
         <button
           type="button"
-          disabled={!users}
+          disabled={disabledButton}
           className="px-4 py-2 font-semibold text-sm bg-green-700 
           text-white rounded-full bg-violet-500 hover:bg-violet-600 
           active:bg-violet-700 focus:outline-none focus:ring 
@@ -66,9 +69,9 @@ export default function Index() {
             updateQuery();
           }}
         >
-          Get lucky
+          {disabledButton ? "Fill more" : "Get lucky"}
         </button>
-        {results?.length > 0 && (
+        {!disabledButton && results?.length > 0 && (
           <p className="py-10">{results.map((result) => `@${result} `)}</p>
         )}
       </form>
