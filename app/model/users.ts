@@ -1,12 +1,11 @@
 import { createEvent, restore, sample, createEffect } from "effector";
-import { persist } from "effector-storage/query";
+import { createGate } from "effector-react";
 
 const shuffleArray = (arr: string[]) => arr.sort(() => 0.5 - Math.random());
 
 export const usersUpdated = createEvent<string>();
 export const $users = restore<string>(usersUpdated, "");
-
-persist({ store: $users, key: "users" });
+export const UsersGate = createGate<string | null>();
 
 const getRandomUsersFx = createEffect<
   { users: string[]; limit: number },
@@ -26,4 +25,11 @@ sample({
   source: $users,
   fn: (users, limit) => ({ limit, users: users.split(/\r?\n?\s/) }),
   target: getRandomUsersFx,
+});
+
+sample({
+  clock: UsersGate.open,
+  filter: (data) => data !== null,
+  fn: (data) => data || "",
+  target: usersUpdated,
 });
